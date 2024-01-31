@@ -1,0 +1,32 @@
+<div>
+    Type:
+    <select [ngModel]="settings.timer.type" (ngModelChange)="timerTypeChange($event)">
+        <option *ngFor="let option of timerTypeOptions" [value]="option.value">{{ option.caption }}</option>
+    </select>
+</div>
+<div>
+    Time Unit:
+    <select #timerUnit [ngModel]="settings.timer.unit" (ngModelChange)="timerUnitChange($event)"
+            [attr.disabled]="settings.timer.type != 0 ? 'disabled' : null">
+        <option *ngFor="let option of timerUnitOptions" [value]="option.value">{{ option.caption }}</option>
+    </select>
+</div>
+<div data-bind="if: timerTimeUnit() == 'any'">
+    Timer Value:
+    <select [(ngModel)]="timerCustomValueMinutes"
+            [attr.disabled]="timerUnit.disabled || settings.timer.unit != 2 ? 'disabled' : null">
+        <option *ngFor="let minute of timerCustomValueMinutesValues" [value]="minute">{{ minute }}</option>
+    </select>
+    :
+    <select [(ngModel)]="timerCustomValueSeconds"
+            [attr.disabled]="timerUnit.disabled || settings.timer.unit != 2 ? 'disabled' : null">
+        <option *ngFor="let second of timerCustomValueSecondsValues" [value]="second">{{ second }}</option>
+    </select>
+</div>
+<div>
+    Timer Done Soundfile:
+    <select [ngModel]="settings.timer.soundFile" (ngModelChange)="soundFileChange($event)">
+        <option *ngFor="let option of soundFileOptions" [value]="option.value">{{ option.caption }}</option>
+    </select>
+    <button type="button" class="btn btn-sm btn-default fa fas fa-volume-up" (click)="previewSoundfile($event)"></button>
+</div>
